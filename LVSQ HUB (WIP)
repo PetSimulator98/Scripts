@@ -1,48 +1,74 @@
-local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/DrRay-UI-Library/main/DrRay.lua"))()
+-- Instances:
 
-local window = DrRayLibrary:Load("lvsq", "Default")
+local DroidsRng = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local TextButton = Instance.new("TextButton")
 
+--Properties:
 
-local tab = DrRayLibrary.newTab("Clicker Empire", "ImageIdHere")
+DroidsRng.Name = "DroidsRng"
+DroidsRng.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+DroidsRng.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
+Frame.Parent = DroidsRng
+Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BorderSizePixel = 0
+Frame.Position = UDim2.new(0.395208627, 0, 0.377697855, 0)
+Frame.Size = UDim2.new(0, 256, 0, 30)
 
-tab.newButton("Hatch Rares", "Prints Hello!", function()
-    local args = {
-        [1] = {
-            [1] = {
-                ["Name"] = "Heaven Fox",
-                ["Rarity"] = 40
-            },
-            [2] = {
-                ["Name"] = "Heaven Cat",
-                ["Rarity"] = 30
-            },
-            [3] = {
-                ["Name"] = "Heaven Bird",
-                ["Rarity"] = 15
-            },
-            [4] = {
-                ["Name"] = "Heaven Dove",
-                ["Rarity"] = 10
-            },
-            [5] = {
-                ["Name"] = "Heaven Bunny",
-                ["Rarity"] = 5
-            },
-            [6] = {
-                ["Name"] = "Heaven Dragon", -- also put any pet name here except robux.
-                ["Rarity"] = 0.01 -- heaven dragon is the best pet that isn't robux.
-            }
-        },
-        [2] = 100, -- eggs hatch --DEfault is 1 you can go by any amount.
-        [3] = 0, -- price 0. if you put -111 and the stats will go up by 111 choose any stat.
-        [4] = {},
-        [5] = "Gems", -- stats
-        [6] = 1 -- dont change this number. to make 100% hatch any pet just change rarity = 100
-    }
-    
-    game:GetService("ReplicatedStorage"):WaitForChild("EggHatchingRemotes"):WaitForChild("HatchServer"):InvokeServer(unpack(args))
-    
-    
+TextButton.Parent = Frame
+TextButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)  -- Default Red
+TextButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.BorderSizePixel = 0
+TextButton.Position = UDim2.new(0.140625, 0, 0.166666672, 0)
+TextButton.Size = UDim2.new(0, 200, 0, 19)
+TextButton.Font = Enum.Font.SourceSansBold
+TextButton.Text = "AUTO ROLL OP!!"
+TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextButton.TextScaled = true
+TextButton.TextSize = 14.000
+TextButton.TextWrapped = true
+
+-- Dragging Functionality
+local dragging = false
+local dragInput, dragStart, startPos
+
+Frame.InputBegan:Connect(function(input, gameProcessed)
+	if gameProcessed then return end
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		dragging = true
+		dragStart = input.Position
+		startPos = Frame.Position
+	end
 end)
 
+Frame.InputChanged:Connect(function(input)
+	if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+		local delta = input.Position - dragStart
+		Frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	end
+end)
+
+Frame.InputEnded:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		dragging = false
+	end
+end)
+
+-- Toggle Button Color & Enable/Disable Functionality
+local isEnabled = false
+
+TextButton.MouseButton1Down:Connect(function()
+	isEnabled = not isEnabled  -- Toggle the state
+	if isEnabled then
+		TextButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)  -- Green when enabled
+		-- Enable the rolling function
+		while isEnabled do
+			game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("PickDroidFunction"):InvokeServer()
+			wait()
+		end
+	else
+		TextButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)  -- Red when disabled
+	end
+end)
