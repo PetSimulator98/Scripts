@@ -1,63 +1,168 @@
-local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/DrRay-UI-Library/main/DrRay.lua"))()
+-- Gui to Lua -- Version: 3.2
+-- Instances:
+local Version02 = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local UICorner = Instance.new("UICorner")
+local TeleportTo15K = Instance.new("TextButton")
+local AutoRebirth = Instance.new("TextButton")
+local OPAUTOFASTPUNCH = Instance.new("TextButton")
+local Credits = Instance.new("TextLabel")
+local Credits2 = Instance.new("TextLabel")
+local Credits3 = Instance.new("TextLabel")
 
-local window = DrRayLibrary:Load("lvsq", "Default")
+-- Properties:
+Version02.Name = "Version0.2"
+Version02.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+Version02.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
+Frame.Parent = Version02
+Frame.BackgroundColor3 = Color3.fromRGB(85, 170, 127)
+Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BorderSizePixel = 0
+Frame.Position = UDim2.new(0.314537168, 0, 0.109527119, 0)
+Frame.Size = UDim2.new(0, 454, 0, 367)
 
-local tab = DrRayLibrary.newTab("My Tab", "ImageIdHere")
+UICorner.CornerRadius = UDim.new(0, 15)
+UICorner.Parent = Frame
 
+-- Helper Function for Button Setup
+local function createButton(parent, name, position, size, text, callback)
+    local button = Instance.new("TextButton")
+    button.Name = name
+    button.Parent = parent
+    button.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+    button.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    button.BorderSizePixel = 0
+    button.Position = position
+    button.Size = size
+    button.Font = Enum.Font.FredokaOne
+    button.Text = text
+    button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    button.TextScaled = true
+    button.TextSize = 14
+    button.TextWrapped = true
+    button.MouseButton1Down:Connect(callback)
+    return button
+end
 
--- TP To 15k Wins
+-- Teleport Button
+local teleportEnabled = false
+local function toggleTeleport()
+    teleportEnabled = not teleportEnabled
+    if teleportEnabled then
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+        humanoidRootPart.CFrame = CFrame.new(-528, -46, 2527) -- Teleport position
+    end
+end
 
-tab.newToggle("Teleport", "Teleport to 15K Position", false, function(toggleState)
-    if toggleState then
-        print("Teleport On")
-        -- Start the teleport loop
-        while toggleState do
-            local player = game.Players.LocalPlayer
-            local character = player.Character or player.CharacterAdded:Wait()
-            local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-            humanoidRootPart.CFrame = CFrame.new(-528, -46, 2527)
-            wait(1)  -- Repeat every second
-            toggleState = tab:GetToggleState("Teleport")  -- Check if toggleState is still on
+TeleportTo15K = createButton(Frame, "TeleportTo15K", UDim2.new(0.030837005, 0, 0.190735698, 0), UDim2.new(0, 200, 0, 38), "TP TO 15K WINS (BEST ONE)", toggleTeleport)
+
+-- Punching System
+local punchingEnabled = false
+local punchConnection
+
+local function punch()
+    local args = {
+        [1] = workspace:WaitForChild("Loaded"):WaitForChild("PunchingBags"):WaitForChild("PunchingBag")
+    }
+    game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("PunchService"):WaitForChild("RE"):WaitForChild("Train"):FireServer(unpack(args))
+end
+
+local function startPunching()
+    punchConnection = game:GetService("RunService").Heartbeat:Connect(function()
+        for i = 1, 40 do
+            punch()
         end
-        print("Teleport Off")
+    end)
+end
+
+local function stopPunching()
+    if punchConnection then
+        punchConnection:Disconnect()
+        punchConnection = nil
+    end
+end
+
+OPAUTOFASTPUNCH = createButton(Frame, "OPAUTOFASTPUNCH", UDim2.new(0.030837005, 0, 0.326975465, 0), UDim2.new(0, 200, 0, 38), "OP AUTO FAST PUNCH", function()
+    punchingEnabled = not punchingEnabled
+    if punchingEnabled then
+        OPAUTOFASTPUNCH.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+        startPunching()
     else
-        print("Teleport Off")
+        OPAUTOFASTPUNCH.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+        stopPunching()
     end
 end)
 
+-- Rebirth System
+local rebirthEnabled = false
+local rebirthConnection
 
+local function rebirth()
+    game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("RebirthService"):WaitForChild("RE"):WaitForChild("Rebirth"):FireServer()
+end
 
-tab.newToggle("Auto Rebirth", "Toggle Auto Rebirth", false, function(toggleState)
-    if toggleState then
-        print("Auto Rebirth On")
-        while toggleState do
-            -- Trigger the rebirth action
-            game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("RebirthService"):WaitForChild("RE"):WaitForChild("Rebirth"):FireServer()
-            wait(2)  -- Repeat every 2 seconds (can be adjusted)
-        end
+AutoRebirth = createButton(Frame, "AutoRebirth", UDim2.new(0.51321584, 0, 0.190735698, 0), UDim2.new(0, 200, 0, 38), "Auto Rebirth", function()
+    rebirthEnabled = not rebirthEnabled
+    if rebirthEnabled then
+        AutoRebirth.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+        rebirthConnection = game:GetService("RunService").Heartbeat:Connect(function()
+            rebirth()
+        end)
     else
-        print("Auto Rebirth Off")
+        AutoRebirth.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+        if rebirthConnection then
+            rebirthConnection:Disconnect()
+            rebirthConnection = nil
+        end
     end
 end)
 
-tab.newToggle("Fast Punch", "Toggle Fast Punch", false, function(toggleState)
-    if toggleState then
-        print("Fast Punch On")
-        -- Start the punch loop
-        while toggleState do
-            -- Trigger the punch action
-            local args = {
-                [1] = workspace:WaitForChild("Loaded"):WaitForChild("PunchingBags"):WaitForChild("PunchingBag")
-            }
-            game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("PunchService"):WaitForChild("RE"):WaitForChild("Train"):FireServer(unpack(args))
-            wait(0.5)  -- Repeat every 0.5 seconds
-            toggleState = tab:GetToggleState("Fast Punch")  -- Check if toggleState is still on
-        end
-        print("Fast Punch Off")
-    else
-        print("Fast Punch Off")
+-- Credits Section
+Credits.Name = "Credits"
+Credits.Parent = Frame
+Credits.BackgroundTransparency = 1
+Credits.Position = UDim2.new(0.279735684, 0, 0.836512268, 0)
+Credits.Size = UDim2.new(0, 200, 0, 50)
+Credits.Text = "Version 0.2"
+
+Credits2.Name = "Credits2"
+Credits2.Parent = Frame
+Credits2.BackgroundTransparency = 1
+Credits2.Position = UDim2.new(0.0154185025, 0, 0.700272501, 0)
+Credits2.Size = UDim2.new(0, 440, 0, 50)
+Credits2.Text = "Made By: LeaksAFile"
+
+Credits3.Name = "Credits3"
+Credits3.Parent = Frame
+Credits3.BackgroundTransparency = 1
+Credits3.Position = UDim2.new(0.030837005, 0, 0.0245231614, 0)
+Credits3.Size = UDim2.new(0, 440, 0, 50)
+Credits3.Text = "👊Break Wall Sim Script"
+
+-- Draggable Frame Functionality
+local dragging = false
+local dragInput, dragStart, startPos
+
+Frame.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+        dragStart = input.Position
+        startPos = Frame.Position
     end
 end)
 
+Frame.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement and dragging then
+        local delta = input.Position - dragStart
+        Frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    end
+end)
 
+Frame.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = false
+    end
+end)
