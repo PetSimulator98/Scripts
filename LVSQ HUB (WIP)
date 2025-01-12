@@ -1,0 +1,63 @@
+local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/DrRay-UI-Library/main/DrRay.lua"))()
+
+local window = DrRayLibrary:Load("lvsq", "Default")
+
+
+local tab = DrRayLibrary.newTab("My Tab", "ImageIdHere")
+
+
+-- TP To 15k Wins
+
+tab.newToggle("Teleport", "Teleport to 15K Position", false, function(toggleState)
+    if toggleState then
+        print("Teleport On")
+        -- Start the teleport loop
+        while toggleState do
+            local player = game.Players.LocalPlayer
+            local character = player.Character or player.CharacterAdded:Wait()
+            local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+            humanoidRootPart.CFrame = CFrame.new(-528, -46, 2527)
+            wait(1)  -- Repeat every second
+            toggleState = tab:GetToggleState("Teleport")  -- Check if toggleState is still on
+        end
+        print("Teleport Off")
+    else
+        print("Teleport Off")
+    end
+end)
+
+
+
+tab.newToggle("Auto Rebirth", "Toggle Auto Rebirth", false, function(toggleState)
+    if toggleState then
+        print("Auto Rebirth On")
+        while toggleState do
+            -- Trigger the rebirth action
+            game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("RebirthService"):WaitForChild("RE"):WaitForChild("Rebirth"):FireServer()
+            wait(2)  -- Repeat every 2 seconds (can be adjusted)
+        end
+    else
+        print("Auto Rebirth Off")
+    end
+end)
+
+tab.newToggle("Fast Punch", "Toggle Fast Punch", false, function(toggleState)
+    if toggleState then
+        print("Fast Punch On")
+        -- Start the punch loop
+        while toggleState do
+            -- Trigger the punch action
+            local args = {
+                [1] = workspace:WaitForChild("Loaded"):WaitForChild("PunchingBags"):WaitForChild("PunchingBag")
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("PunchService"):WaitForChild("RE"):WaitForChild("Train"):FireServer(unpack(args))
+            wait(0.5)  -- Repeat every 0.5 seconds
+            toggleState = tab:GetToggleState("Fast Punch")  -- Check if toggleState is still on
+        end
+        print("Fast Punch Off")
+    else
+        print("Fast Punch Off")
+    end
+end)
+
+
