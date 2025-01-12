@@ -1,46 +1,48 @@
-local OP_AUTOFASTPUNCH = Instance.new("TextButton")
-OP_AUTOFASTPUNCH.Name = "OP_AUTOFASTPUNCH"
-OP_AUTOFASTPUNCH.Parent = Frame
-OP_AUTOFASTPUNCH.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-OP_AUTOFASTPUNCH.BorderColor3 = Color3.fromRGB(0, 0, 0)
-OP_AUTOFASTPUNCH.BorderSizePixel = 0
-OP_AUTOFASTPUNCH.Position = UDim2.new(0.030837005, 0, 0.326975465, 0)
-OP_AUTOFASTPUNCH.Size = UDim2.new(0, 200, 0, 38)
-OP_AUTOFASTPUNCH.Font = Enum.Font.FredokaOne
-OP_AUTOFASTPUNCH.Text = "OP AUTO FAST PUNCH"
-OP_AUTOFASTPUNCH.TextColor3 = Color3.fromRGB(255, 255, 255)
-OP_AUTOFASTPUNCH.TextScaled = true
-OP_AUTOFASTPUNCH.TextSize = 14.000
-OP_AUTOFASTPUNCH.TextWrapped = true
+local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/DrRay-UI-Library/main/DrRay.lua"))()
 
-local punching = false
-local pulse
+local window = DrRayLibrary:Load("lvsq", "Default")
 
--- Function to handle punching logic
-local function punch()
+
+local tab = DrRayLibrary.newTab("Clicker Empire", "ImageIdHere")
+
+
+tab.newButton("Hatch Rares", "Prints Hello!", function()
     local args = {
-        [1] = workspace:WaitForChild("Loaded"):WaitForChild("PunchingBags"):WaitForChild("PunchingBag")
+        [1] = {
+            [1] = {
+                ["Name"] = "Heaven Fox",
+                ["Rarity"] = 40
+            },
+            [2] = {
+                ["Name"] = "Heaven Cat",
+                ["Rarity"] = 30
+            },
+            [3] = {
+                ["Name"] = "Heaven Bird",
+                ["Rarity"] = 15
+            },
+            [4] = {
+                ["Name"] = "Heaven Dove",
+                ["Rarity"] = 10
+            },
+            [5] = {
+                ["Name"] = "Heaven Bunny",
+                ["Rarity"] = 5
+            },
+            [6] = {
+                ["Name"] = "Heaven Dragon", -- also put any pet name here except robux.
+                ["Rarity"] = 0.01 -- heaven dragon is the best pet that isn't robux.
+            }
+        },
+        [2] = 100, -- eggs hatch --DEfault is 1 you can go by any amount.
+        [3] = 0, -- price 0. if you put -111 and the stats will go up by 111 choose any stat.
+        [4] = {},
+        [5] = "Gems", -- stats
+        [6] = 1 -- dont change this number. to make 100% hatch any pet just change rarity = 100
     }
-    game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("PunchService"):WaitForChild("RE"):WaitForChild("Train"):FireServer(unpack(args))
-end
-
--- Connect the button to toggle the punching
-OP_AUTOFASTPUNCH.MouseButton1Down:Connect(function()
-    punching = not punching
-    if punching then
-        OP_AUTOFASTPUNCH.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
-        pulse = game:GetService("RunService").Heartbeat:Connect(function()
-            -- Repeated punch calls for fast punching
-            for i = 1, 26 do
-                -- Here we're calling the punch function 26 times rapidly
-                punch()
-            end
-        end)
-    else
-        OP_AUTOFASTPUNCH.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-        if pulse then
-            pulse:Disconnect()
-            pulse = nil
-        end
-    end
+    
+    game:GetService("ReplicatedStorage"):WaitForChild("EggHatchingRemotes"):WaitForChild("HatchServer"):InvokeServer(unpack(args))
+    
+    
 end)
+
